@@ -1,0 +1,39 @@
+@(presentations:List[models.Presentation])
+
+@import java.text._
+@import java.util._
+
+@df(s:Date, e:Date) = {
+	@(new SimpleDateFormat("EEEE, MMMM dd HH:mm").format(s)) - @(new SimpleDateFormat("HH:mm").format(e))
+}
+
+@main(title = "Devoxx Schedule Browser - Powered by Windows Azure") {
+	<ul class="timeslots">
+		@presentations.filter{s => s.kind == "Talk" & s.`type` == "Conference"}.groupBy{_.fromTime}.toSeq.sortWith((a, b) => a._1.compareTo(b._1) < 0).map { kv =>
+			<li>
+				<div class="panel">
+					<h1>@df(kv._1, kv._2(0).toTime)</h1>
+					<table class="presentations">
+						<tbody>
+							@kv._2.sortBy(_.room).map { presentation =>
+								<tr>
+									<td class="room">@presentation.room</td>
+									<td class="title">
+										@if(presentation.presentationUri) {
+											<a href="@action(controllers.Presentation.show(presentation.urlId))">@presentation.title</a>						
+										} else {
+											@presentation.title						
+										}
+									</td>
+									<td class="speaker">
+										@presentation.speaker
+									</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+			</li>
+		}
+	</ul>
+}

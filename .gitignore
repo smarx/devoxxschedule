@@ -1,0 +1,5 @@
+*.cspkg
+*.csx
+tmp/
+WorkerRole/app/modules/
+WorkerRole/app/lib/

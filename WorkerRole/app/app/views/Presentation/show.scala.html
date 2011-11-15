@@ -1,0 +1,14 @@
+@(presentation:models.Presentation, speaker:models.Speaker)
+
+@main(title = presentation.title + " - Devoxx Presentation") {
+	<div class="panel">
+		<h1>@presentation.title</h1>
+		<p>@HtmlFormat.raw(presentation.summaryFormatted)</p>
+	</div>
+	<div class="panel about">
+		<h1>About @speaker.firstName @speaker.lastName from @speaker.company</h1>
+		<img src="@speaker.imageURI" />
+		<p>@speaker.bio</p>
+		<div style="clear:both"></div>
+	</div>
+}

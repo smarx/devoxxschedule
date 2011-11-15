@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="PackAndDeploy" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
+    <WorkerRole name="WorkerRole" vmsize="Small">
+        <Startup>
+            <Task commandLine="startup.cmd" executionContext="elevated">
+                <Environment>
+                    <Variable name="CONNECTION_STRING">
+                        <RoleInstanceValue xpath="/RoleEnvironment/CurrentInstance/ConfigurationSettings/ConfigurationSetting[@name='DataConnectionString']/@value" />
+                    </Variable>
+                    <Variable name="JAVA_PATH">
+                        <RoleInstanceValue xpath="/RoleEnvironment/CurrentInstance/LocalResources/LocalResource[@name='java']/@path" />
+                    </Variable>
+                </Environment>
+            </Task>
+        </Startup>
+        <ConfigurationSettings>
+            <Setting name="DataConnectionString" />
+        </ConfigurationSettings>
+        <Runtime>
+            <Environment>
+                <Variable name="ADDRESS">
+                    <RoleInstanceValue xpath="/RoleEnvironment/CurrentInstance/Endpoints/Endpoint[@name='HttpIn']/@address" />
+                </Variable>
+                <Variable name="PORT">
+                    <RoleInstanceValue xpath="/RoleEnvironment/CurrentInstance/Endpoints/Endpoint[@name='HttpIn']/@port" />
+                </Variable>
+                <Variable name="JAVA_PATH">
+                    <RoleInstanceValue xpath="/RoleEnvironment/CurrentInstance/LocalResources/LocalResource[@name='java']/@path" />
+                </Variable>
+            </Environment>
+            <EntryPoint>
+                <ProgramEntryPoint commandLine="run.cmd" setReadyOnProcessStart="true" />
+            </EntryPoint>
+        </Runtime>
+        <Endpoints>
+            <InputEndpoint name="HttpIn" protocol="tcp" port="80" />
+        </Endpoints>
+        <LocalResources>
+            <LocalStorage name="java" cleanOnRoleRecycle="true" sizeInMB="1000" />
+        </LocalResources>
+    </WorkerRole>
+</ServiceDefinition>

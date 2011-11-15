@@ -1,0 +1,1 @@
+cspack ServiceDefinition.csdef /out:PackAndDeploy.cspkg

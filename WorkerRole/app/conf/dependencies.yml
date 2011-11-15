@@ -1,0 +1,13 @@
+# Application dependencies
+
+require:
+    - play
+    - play -> scala 0.9.1
+    - henkelmann -> actuarius_2.8.1 0.2
+
+repositories:
+    - zenexity:
+        type:       http
+        artifact:   "http://maven.henkelmann.eu/eu/henkelmann/[module]/[revision]/[module]-[revision].[ext]"
+        contains:
+            - henkelmann -> *

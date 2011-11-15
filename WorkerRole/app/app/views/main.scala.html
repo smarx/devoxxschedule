@@ -1,0 +1,23 @@
+@(title:String = "")(body: => Html)
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>@title</title>
+        <link rel="stylesheet" media="screen" href="@asset("public/stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@asset("public/images/favicon.png")">
+    </head>
+    <body>
+	    <div id="header">
+	    	<img src="@asset("public/images/DV11.png")" style="float:left;" />
+	    	<img src="@asset("public/images/PoweredByWindowsAzure_Small.png")" style="float:right;height:50px;margin-top:30px;" />
+    		<h1><a href="@action(controllers.Application.index)">Devoxx Schedule Browser</a></h1>
+    	</div>
+    	<div id="container">
+	        @body
+        </div>
+        <div id="footer">
+            <a href="@action(controllers.About.index)">about this app</a>
+        </div>
+    </body>
+</html>
